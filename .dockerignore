@@ -1,0 +1,14 @@
+venv
+__pycache__
+*.pyc
+.ipynb_checkpoints
+*.ipynb
+dataset
+training_data
+*.csv
+*.zip
+*.tar
+.git
+.gitignore
+uploads/*
+node_modules

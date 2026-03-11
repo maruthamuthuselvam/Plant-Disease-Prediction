@@ -1,0 +1,113 @@
+{% extends "base.html" %} {% block content %}
+
+<!-- Hero Section -->
+<div class="hero-section text-center mb-5">
+    <h1 class="hero-title">Intelligent Crop Disease Detection</h1>
+    <p class="hero-subtitle">Upload a picture of a leaf. Our advanced deep learning model will instantly diagnose
+        potential diseases, helping you save your crops and increase yield.</p>
+</div>
+
+<!-- Upload & Predict Section -->
+<div class="row layout-row g-5">
+
+    <div class="col-lg-6">
+        <div class="glass-card upload-card h-100">
+            <div class="card-header text-center mb-4">
+                <h3><i class="fa-solid fa-cloud-arrow-up"></i> Analyze Leaf</h3>
+            </div>
+            <div class="card-body p-0">
+                <form id="upload-file" method="post" enctype="multipart/form-data" class="upload-zone text-center">
+                    <div class="upload-wrapper">
+                        <i class="fa-regular fa-image upload-icon"></i>
+                        <h4 class="mt-3">Drag & Drop Image</h4>
+                        <p class="text-muted mb-0">or <span class="browse-link text-primary">Browse Files</span></p>
+                        <input type="file" name="file" id="imageUpload" accept=".png, .jpg, .jpeg">
+                    </div>
+                </form>
+
+                <div class="image-section mt-4 text-center" style="display:none;">
+                    <div class="img-preview-container mx-auto">
+                        <div id="imagePreview"></div>
+                    </div>
+
+                    <div class="action-buttons mt-4 d-flex justify-content-center align-items-center gap-3">
+                        <button type="button" class="btn btn-outline-light btn-reset" id="btn-reset">
+                            <i class="fa-solid fa-rotate-left"></i> Change
+                        </button>
+                        <button type="button" class="btn btn-predict" id="btn-predict">
+                            <span>Analyze Image</span>
+                            <i class="fa-solid fa-wand-magic-sparkles"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="loader-container mt-4 text-center" style="display:none;">
+                    <div class="custom-loader"></div>
+                    <p class="loading-text mt-3">Analyzing leaf patterns...</p>
+                </div>
+
+                <div class="result-container mt-4" style="display:none;" id="resultContainer">
+                    <div class="result-box">
+                        <h4 class="result-label">Diagnosis Result:</h4>
+                        <h3 id="resultText" class="result-text"></h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Info Section Sidebar -->
+    <div class="col-lg-6">
+        <div class="glass-card info-card h-100">
+            <h3 class="mb-4">How It Works</h3>
+            <ul class="steps-list">
+                <li>
+                    <span class="step-icon"><i class="fa-solid fa-camera"></i></span>
+                    <div class="step-text">
+                        <h5>Take a clear photo</h5>
+                        <p>Ensure the leaf is well-lit, centered, and fully in focus.</p>
+                    </div>
+                </li>
+                <li>
+                    <span class="step-icon"><i class="fa-solid fa-upload"></i></span>
+                    <div class="step-text">
+                        <h5>Upload & Analyze</h5>
+                        <p>Our AI processes the image using a robust neural network.</p>
+                    </div>
+                </li>
+                <li>
+                    <span class="step-icon"><i class="fa-solid fa-file-medical"></i></span>
+                    <div class="step-text">
+                        <h5>Get Instant Results</h5>
+                        <p>Receive immediate diagnosis to take necessary actions.</p>
+                    </div>
+                </li>
+            </ul>
+
+            <hr class="glass-divider my-4">
+
+            <h4 class="mb-3">Supported Crops & Diseases</h4>
+            <div class="row g-3">
+                <div class="col-md-12 text-center">
+                    <div class="example-card p-3">
+                        <img src="{{url_for('static', filename='screenshot_3.png')}}" alt="Supported Crops"
+                            class="img-fluid rounded shadow-sm mb-3"
+                            style="max-height: 120px; object-fit: cover; width: 100%;">
+                        <img src="{{url_for('static', filename='screenshot_2.png')}}" alt="Supported Diseases"
+                            class="img-fluid rounded shadow-sm"
+                            style="max-height: 120px; object-fit: cover; width: 100%;">
+                        <p class="mt-2 mb-0 small text-center fw-medium text-muted">Supports numerous crops & disease
+                            detection</p>
+                    </div>
+                </div>
+            </div>
+            <p class="text-muted small mt-3 px-2 d-flex align-items-center justify-content-center">
+                Example Image:
+                <img src="{{url_for('static', filename='strawberry-plant-leaf-spot.jpg')}}" alt="Example Leaf"
+                    class="example-thumb rounded mx-2" style="width: 40px; height: 40px; object-fit: cover;">
+                Strawberry Leaf Scorch
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}
