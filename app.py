@@ -13,6 +13,11 @@ from werkzeug.utils import secure_filename
 # Flask app
 app = Flask(__name__)
 
+# Create uploads folder if not exists
+UPLOAD_FOLDER = "uploads"
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+
+# Model path
 MODEL_PATH = "Model.hdf5"
 
 print("** Model Loading **")
@@ -38,6 +43,7 @@ classes = [
 
 
 def model_predict(img_path):
+
     img = image.load_img(img_path, target_size=(224, 224))
 
     x = image.img_to_array(img)
@@ -62,10 +68,18 @@ def index():
 @app.route("/predict", methods=["POST"])
 def upload():
 
+    if "file" not in request.files:
+        return "No file uploaded"
+
     f = request.files["file"]
 
+    if f.filename == "":
+        return "No selected file"
+
+    filename = secure_filename(f.filename)
+
     basepath = os.path.dirname(__file__)
-    upload_path = os.path.join(basepath, "uploads", secure_filename(f.filename))
+    upload_path = os.path.join(basepath, UPLOAD_FOLDER, filename)
 
     f.save(upload_path)
 
