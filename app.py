@@ -13,15 +13,23 @@ from werkzeug.utils import secure_filename
 # Flask app
 app = Flask(__name__)
 
-# Create uploads folder if not exists
-UPLOAD_FOLDER = "uploads"
+# Base directory
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+# Upload folder
+UPLOAD_FOLDER = os.path.join(BASE_DIR, "uploads")
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 # Model path
-MODEL_PATH = "Model.hdf5"
+MODEL_PATH = os.path.join(BASE_DIR, "Model.hdf5")
 
 print("** Model Loading **")
+
+if not os.path.exists(MODEL_PATH):
+    raise Exception(f"Model file not found at {MODEL_PATH}")
+
 model = load_model(MODEL_PATH, compile=False)
+
 print("** Model Loaded **")
 
 # Class labels
@@ -78,8 +86,7 @@ def upload():
 
     filename = secure_filename(f.filename)
 
-    basepath = os.path.dirname(__file__)
-    upload_path = os.path.join(basepath, UPLOAD_FOLDER, filename)
+    upload_path = os.path.join(UPLOAD_FOLDER, filename)
 
     f.save(upload_path)
 
